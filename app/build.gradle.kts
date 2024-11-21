@@ -6,12 +6,11 @@ plugins {
 
 android {
     namespace = "com.example.kotlin.examenmoviles"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.kotlin.examenmoviles"
-        minSdk = 24
-        var targetSdk = 34
+        minSdk = 21
         versionCode = 1
         versionName = "1.0"
 
@@ -52,7 +51,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
     implementation("androidx.fragment:fragment-ktx:1.5.0")
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.databinding:databinding-runtime:7.1.2")
@@ -61,7 +59,6 @@ dependencies {
 
     //Parse
     implementation("com.github.parse-community.Parse-SDK-Android:parse:4.3.0")
-
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -73,19 +70,19 @@ dependencies {
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
 
     //Corrutinas
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
     // Activity
-    implementation("androidx.activity:activity-ktx:1.5.0")
+    implementation("androidx.activity:activity-ktx:1.9.3")
     // Data binding
-    implementation("androidx.databinding:databinding-runtime:7.1.2")
+    implementation("androidx.databinding:databinding-runtime:8.7.2")
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     // Circle Image View
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
