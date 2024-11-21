@@ -35,8 +35,20 @@ class ExamenViewModel : ViewModel() {
         }
     }
 
-    fun filterEvents(category: String?, startDate: String?, endDate: String?) {
-        val filtered = filterUseCase.execute(_eventos.value ?: emptyList(), category, startDate, endDate)
+    fun filterEvents(place: String?, dateRange: String?) {
+        val filtered = filterUseCase.execute(
+            _eventos.value ?: emptyList(),
+            place,
+            null, null
+        ).filter { event ->
+            dateRange == null || dateRange == "Todos" || isInRange(event.date, dateRange)
+        }
         _filteredEvents.postValue(filtered)
+    }
+
+    private fun isInRange(date: String, range: String): Boolean {
+        val year = date.toIntOrNull() ?: return false
+        val (start, end) = range.split(" a ").map { it.toInt() }
+        return year in start..end
     }
 }

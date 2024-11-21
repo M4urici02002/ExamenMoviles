@@ -1,3 +1,24 @@
 <resources>
+    <string-array name="places">
+        <item>Todos</item>
+        <item>Roman Republic</item>
+        <item>Carthage</item>
+        <item>China</item>
+        <item>Greece</item>
+        <item>Persia</item>
+        <item>Seleucid Empire</item>
+        <item>Egypt</item>
+        <item>South America</item>
+        <item>India</item>
+    </string-array>
+
+    <string-array name="date_ranges">
+        <item>Todos</item>
+        <item>-210 a -170</item>
+        <item>-170 a -140</item>
+        <item>-140 a -110</item>
+        <item>-110 a -80</item>
+    </string-array>
+
     <string name="app_name">ExamenMoviles</string>
 </resources>
