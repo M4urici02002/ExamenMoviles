@@ -12,36 +12,37 @@ class EventAdapter(
     private var eventos: List<EventoHistorico> = emptyList()
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
-    // ViewHolder para representar cada evento
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val dateText: TextView = view.findViewById(R.id.eventDate)
         private val descriptionText: TextView = view.findViewById(R.id.eventDescription)
         private val categoryText: TextView = view.findViewById(R.id.eventCategory)
+        private val moreDetails: TextView = view.findViewById(R.id.eventDetails)
+        private var isExpanded = false
 
-        // Vincula los datos del evento a las vistas
         fun bind(evento: EventoHistorico) {
             dateText.text = evento.date
             descriptionText.text = evento.description
             categoryText.text = "${evento.category1} - ${evento.category2}"
+
+            itemView.setOnClickListener {
+                isExpanded = !isExpanded
+                moreDetails.visibility = if (isExpanded) View.VISIBLE else View.GONE
+                moreDetails.text = "Language: ${evento.lang}\nGranularity: ${evento.granularity}"
+            }
         }
     }
 
-    // Crea una nueva vista para un elemento
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_event, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
         return EventViewHolder(view)
     }
 
-    // Vincula los datos a la vista existente
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.bind(eventos[position])
     }
 
-    // Devuelve el tamaño de la lista
     override fun getItemCount(): Int = eventos.size
 
-    // Actualiza los datos del adaptador
     fun updateData(nuevosEventos: List<EventoHistorico>) {
         eventos = nuevosEventos
         notifyDataSetChanged()

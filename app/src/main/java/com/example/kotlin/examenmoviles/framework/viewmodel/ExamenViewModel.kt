@@ -6,21 +6,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlin.examenmoviles.data.network.model.EventoHistorico
 import com.example.kotlin.examenmoviles.data.repositories.ExamenRepository
+import com.example.kotlin.examenmoviles.domain.FilterHistoricalEventsUseCase
 import kotlinx.coroutines.launch
 
 class ExamenViewModel : ViewModel() {
 
     private val repository = ExamenRepository()
+    private val filterUseCase = FilterHistoricalEventsUseCase()
 
-    // LiveData para los eventos históricos
     private val _eventos = MutableLiveData<List<EventoHistorico>>()
     val eventos: LiveData<List<EventoHistorico>> get() = _eventos
 
-    // LiveData para manejar errores
+    private val _filteredEvents = MutableLiveData<List<EventoHistorico>>()
+    val filteredEvents: LiveData<List<EventoHistorico>> get() = _filteredEvents
+
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    // Función para obtener eventos históricos
     fun fetchEvents(page: Int) {
         viewModelScope.launch {
             repository.fetchHistoricalEvents(page) { resultado, excepcion ->
@@ -31,5 +33,10 @@ class ExamenViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun filterEvents(category: String?, startDate: String?, endDate: String?) {
+        val filtered = filterUseCase.execute(_eventos.value ?: emptyList(), category, startDate, endDate)
+        _filteredEvents.postValue(filtered)
     }
 }

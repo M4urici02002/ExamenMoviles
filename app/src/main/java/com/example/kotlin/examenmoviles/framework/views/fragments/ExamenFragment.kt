@@ -29,26 +29,25 @@ class ExamenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configuración del RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         eventAdapter = EventAdapter()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = eventAdapter
 
-        // Configuración del ViewModel
         viewModel = ViewModelProvider(requireActivity()).get(ExamenViewModel::class.java)
 
-        // Observa los eventos históricos
         viewModel.eventos.observe(viewLifecycleOwner) { eventos ->
             eventAdapter.updateData(eventos)
         }
 
-        // Observa los errores
         viewModel.error.observe(viewLifecycleOwner) { mensajeError ->
             Toast.makeText(requireContext(), mensajeError, Toast.LENGTH_LONG).show()
         }
 
-        // Solicitar eventos históricos (página 1)
+        viewModel.filteredEvents.observe(viewLifecycleOwner) { filtered ->
+            eventAdapter.updateData(filtered)
+        }
+
         viewModel.fetchEvents(page = 1)
     }
 }

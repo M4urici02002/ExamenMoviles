@@ -11,33 +11,45 @@
     android:background="@color/card_background">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Fecha del evento -->
         <TextView
             android:id="@+id/eventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Date"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary" />
+            android:textSize="16sp" />
 
+        <!-- Descripción del evento -->
         <TextView
             android:id="@+id/eventDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary" />
+            android:text="Description"
+            android:textSize="14sp" />
 
+        <!-- Categorías -->
         <TextView
             android:id="@+id/eventCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="2dp"
-            android:textSize="12sp"
-            android:textColor="@color/text_secondary" />
+            android:text="Category"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <!-- Detalles adicionales (inicialmente ocultos) -->
+        <TextView
+            android:id="@+id/eventDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional details"
+            android:visibility="gone"
+            android:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package com.example.kotlin.examenmoviles.data.network
+package com.example.kotlin.data.network
 
 import android.content.Context
 import com.example.kotlin.examenmoviles.utils.Constants.APPLICATION_ID
@@ -6,22 +6,32 @@ import com.example.kotlin.examenmoviles.utils.Constants.BASE_URL
 import com.example.kotlin.examenmoviles.utils.Constants.CLIENT_KEY
 import com.parse.Parse
 import com.parse.ParseCloud
+import com.parse.ParseException
 
 object NetworkModuleDI {
+
+    private var isParseInitialized = false
+
     /**
      * Inicializa Parse con la configuración necesaria para la conexión al backend.
      *
      * @param context El contexto de la aplicación utilizado para la configuración de Parse.
      */
     fun initializeParse(context: Context) {
-        Parse.initialize(
-            Parse.Configuration
-                .Builder(context)
-                .applicationId(APPLICATION_ID)
-                .clientKey(CLIENT_KEY)
-                .server(BASE_URL)
-                .build()
-        )
+        try {
+            Parse.initialize(
+                Parse.Configuration
+                    .Builder(context)
+                    .applicationId(APPLICATION_ID)
+                    .clientKey(CLIENT_KEY)
+                    .server(BASE_URL)
+                    .build()
+            )
+            isParseInitialized = true
+            println("Parse inicializado correctamente.")
+        } catch (e: Exception) {
+            println("Error al inicializar Parse: ${e.message}")
+        }
     }
 
     /**
@@ -38,24 +48,49 @@ object NetworkModuleDI {
         maxReintentos: Int = 3,
         callback: (T?, Exception?) -> Unit
     ) {
+        if (!isParseInitialized) {
+            callback(null, IllegalStateException("Parse no ha sido inicializado. Llama a initializeParse primero."))
+            return
+        }
+
+        if (parametros.isEmpty()) {
+            callback(null, IllegalArgumentException("Los parámetros no pueden estar vacíos."))
+            return
+        }
+
         var intentos = 0
 
         fun realizarLlamada() {
-            ParseCloud.callFunctionInBackground<T>(nombreFuncion, parametros) { resultado, error ->
-                if (error == null) {
-                    // Éxito: devolver el resultado
-                    callback(resultado, null)
-                } else {
-                    intentos++
-                    if (intentos < maxReintentos) {
-                        // Log para depuración
-                        println("Intento $intentos fallido. Reintentando...")
-                        realizarLlamada()
+            println("Llamando a la función '$nombreFuncion' con parámetros: $parametros. Intento: ${intentos + 1}")
+
+            try {
+                ParseCloud.callFunctionInBackground<T>(nombreFuncion, parametros) { resultado, error ->
+                    if (error == null) {
+                        println("Llamada exitosa. Resultado: $resultado")
+                        callback(resultado, null)
                     } else {
-                        // Fallo después de reintentar
-                        callback(null, error)
+                        intentos++
+                        println("Error en la llamada: ${error.message}. Intento $intentos de $maxReintentos.")
+
+                        // Validación de errores comunes
+                        when (error.code) {
+                            ParseException.CONNECTION_FAILED -> println("Error: Falló la conexión al servidor.")
+                            ParseException.OBJECT_NOT_FOUND -> println("Error: Objeto no encontrado.")
+                            ParseException.TIMEOUT -> println("Error: Tiempo de espera agotado.")
+                            else -> println("Error desconocido: ${error.message}")
+                        }
+
+                        if (intentos < maxReintentos) {
+                            realizarLlamada()
+                        } else {
+                            println("Error definitivo tras $maxReintentos intentos: ${error.message}")
+                            callback(null, error)
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                println("Excepción no controlada: ${e.message}")
+                callback(null, e)
             }
         }
 

@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.databinding:databinding-runtime:7.1.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
