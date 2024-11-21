@@ -7,6 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.kotlin.examenmoviles.data.network.model.EventoHistorico
 import com.example.kotlin.examenmoviles.data.repositories.ExamenRepository
 
+/**
+ * ViewModel que gestiona la lógica de negocio para la obtención de eventos históricos.
+ *
+ * @param application Contexto de la aplicación para el ciclo de vida del ViewModel.
+ */
 class ExamenRequirement(application: Application) : AndroidViewModel(application) {
 
     private val repository = ExamenRepository()

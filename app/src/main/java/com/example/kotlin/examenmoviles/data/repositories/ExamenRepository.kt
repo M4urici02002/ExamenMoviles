@@ -6,8 +6,17 @@ import com.example.kotlin.examenmoviles.data.network.model.EventoHistorico
 import com.example.kotlin.examenmoviles.data.network.model.ResultData
 import com.parse.ParseObject
 
+/**
+ * Repositorio para manejar la obtención de eventos históricos desde el backend.
+ */
 class ExamenRepository {
 
+    /**
+     * Obtiene una lista de eventos históricos desde el backend utilizando Parse.
+     *
+     * @param page Número de la página que se desea obtener.
+     * @param onResult Callback que devuelve un modelo [ExamenModel] en caso de éxito o una excepción en caso de error.
+     */
     fun fetchHistoricalEvents(
         page: Int,
         onResult: (ExamenModel?, Exception?) -> Unit
