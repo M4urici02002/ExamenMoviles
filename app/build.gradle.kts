@@ -47,9 +47,11 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 
     implementation("androidx.fragment:fragment-ktx:1.5.0")
     implementation("androidx.activity:activity-ktx:1.5.0")
@@ -87,7 +89,6 @@ dependencies {
     // Circle Image View
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    implementation("com.github.parse-community.Parse-SDK-Android:parse:4.3.0")
     implementation("com.google.android.material:material:1.11.0")
 
 }
