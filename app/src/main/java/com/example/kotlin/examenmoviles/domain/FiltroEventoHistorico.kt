@@ -2,17 +2,26 @@ package com.example.kotlin.examenmoviles.domain
 
 import com.example.kotlin.examenmoviles.data.network.model.EventoHistorico
 
+/**
+ * Caso de uso para filtrar eventos históricos basados en diferentes criterios.
+ */
 class FilterHistoricalEventsUseCase {
+
     /**
-     * Filters the list of historical events based on the provided parameters.
+     * Filtra una lista de eventos históricos en base a los parámetros proporcionados.
      *
-     * @param events The list of events to filter.
-     * @param category The category to filter by (null for no filter).
-     * @param startDate The start date for filtering (null for no filter).
-     * @param endDate The end date for filtering (null for no filter).
-     * @return The filtered list of events.
+     * @param events Lista de eventos a filtrar.
+     * @param category Categoría por la cual filtrar (nulo si no se aplica filtro).
+     * @param startDate Fecha de inicio para el filtro (nulo si no se aplica filtro).
+     * @param endDate Fecha de fin para el filtro (nulo si no se aplica filtro).
+     * @return Lista filtrada de eventos históricos.
      */
-    fun execute(events: List<EventoHistorico>, category: String?, startDate: String?, endDate: String?): List<EventoHistorico> {
+    fun execute(
+        events: List<EventoHistorico>,
+        category: String?,
+        startDate: String?,
+        endDate: String?
+    ): List<EventoHistorico> {
         return events.filter { event ->
             (category == null || event.category1 == category || event.category2 == category) &&
                     (startDate == null || event.date >= startDate) &&
@@ -20,4 +29,3 @@ class FilterHistoricalEventsUseCase {
         }
     }
 }
-

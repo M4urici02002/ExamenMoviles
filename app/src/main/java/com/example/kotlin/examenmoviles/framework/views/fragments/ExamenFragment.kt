@@ -15,6 +15,9 @@ import com.example.kotlin.examenmoviles.R
 import com.example.kotlin.examenmoviles.framework.adapter.EventAdapter
 import com.example.kotlin.examenmoviles.framework.viewmodel.ExamenViewModel
 
+/**
+ * Fragmento principal para mostrar y filtrar eventos históricos.
+ */
 class ExamenFragment : Fragment() {
 
     private lateinit var viewModel: ExamenViewModel
@@ -31,6 +34,12 @@ class ExamenFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_examen, container, false)
     }
 
+    /**
+     * Configura la vista del fragmento después de haber sido creada.
+     *
+     * @param view La vista principal del fragmento.
+     * @param savedInstanceState Estado guardado anteriormente del fragmento.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,18 +54,22 @@ class ExamenFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(ExamenViewModel::class.java)
 
+        // Observa los datos originales
         viewModel.eventos.observe(viewLifecycleOwner) { eventos ->
             eventAdapter.updateData(eventos)
         }
 
+        // Observa los datos filtrados
         viewModel.filteredEvents.observe(viewLifecycleOwner) { filtered ->
             eventAdapter.updateData(filtered)
         }
 
+        // Observa los mensajes de error
         viewModel.error.observe(viewLifecycleOwner) { mensajeError ->
             Toast.makeText(requireContext(), mensajeError, Toast.LENGTH_LONG).show()
         }
 
+        // Configuración del botón para aplicar filtros
         applyFilterButton.setOnClickListener {
             val selectedPlace = placeSpinner.selectedItem.toString()
             val selectedRange = dateRangeSpinner.selectedItem.toString()
@@ -66,6 +79,7 @@ class ExamenFragment : Fragment() {
             )
         }
 
+        // Carga inicial de eventos
         viewModel.fetchEvents(page = 1)
     }
 }

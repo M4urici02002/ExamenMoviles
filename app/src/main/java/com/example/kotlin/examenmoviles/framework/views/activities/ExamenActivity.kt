@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin.examenmoviles.ui.fragments.ExamenFragment
 import com.example.kotlin.examenmoviles.R
 
+/**
+ * Actividad principal de la aplicación que actúa como contenedor para los fragmentos.
+ */
 class ExamenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

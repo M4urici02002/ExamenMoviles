@@ -8,6 +8,9 @@ import com.parse.Parse
 import com.parse.ParseCloud
 import com.parse.ParseException
 
+/**
+ * Módulo de red para la integración con Parse, incluyendo inicialización y llamadas a funciones en la nube.
+ */
 object NetworkModuleDI {
 
     private var isParseInitialized = false
@@ -40,7 +43,8 @@ object NetworkModuleDI {
      * @param nombreFuncion Nombre de la función en la nube a invocar.
      * @param parametros Parámetros necesarios para la función.
      * @param maxReintentos Número máximo de reintentos en caso de error.
-     * @param callback Callback con el resultado o el error.
+     * @param callback Callback que recibe el resultado o un error.
+     * @param T Tipo de dato esperado como resultado de la función en la nube.
      */
     fun <T> callCloudFunctionWithRetry(
         nombreFuncion: String,
@@ -60,6 +64,9 @@ object NetworkModuleDI {
 
         var intentos = 0
 
+        /**
+         * Realiza la llamada a la función en la nube.
+         */
         fun realizarLlamada() {
             println("Llamando a la función '$nombreFuncion' con parámetros: $parametros. Intento: ${intentos + 1}")
 
